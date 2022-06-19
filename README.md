@@ -12,4 +12,4 @@ output should be something like this (work still in progress on dynamic labeling
 
 above is version 2.3 (file under pmtvis1)
 
-viz of Chronic and Acute Training Load (CTL and ATL), and Training Stress Balance (TSB) for more formulaic PMT analysis in the works...
+viz (@daily scale) of Chronic and Acute Training Load (CTL and ATL), and Training Stress Balance (TSB) for more formulaic PMT analysis is in the works... see PMTtest1.py for current progress
