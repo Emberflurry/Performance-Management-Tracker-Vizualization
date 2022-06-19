@@ -1,8 +1,6 @@
 # import chart_studio.plotly as py
 import plotly.graph_objects as grphobj
 from plotly.subplots import make_subplots
-# import pandas as pd
-# from datetime import datetime, date
 import plotly.io as pio
 import plotly.express as px
 from wklydfcleaner2 import dfretrnclen
@@ -11,7 +9,7 @@ from datetime import datetime, date
 
 # set source excel file and sheet to pull from, run retriever and cleaner to prepare the df
 sourceexcelfile = r'C://Users//John DeForest//Desktop//Ski Projects and Analysis//PMT_3_41_BACKUP.xlsx'
-sourceexcelsheet = 'TrainingData'  # try to pull ALREADY CALCD BY EXCEL PMT VALS first (in future redo formulas?)
+sourceexcelsheet = 'dailystats'  # try to pull ALREADY CALCD BY EXCEL PMT VALS first (in future redo formulas?)
 
 # READ EXCEL INTO PANDAS DF:
 print("getting date...")
@@ -27,10 +25,11 @@ print("loading dataframe...")
 mydf = pd.read_excel(sourceexcelfile, sheet_name=sourceexcelsheet)
 
 # round the values (NOT the dates)
+# TODO CHANGE THIS TO MATCH ACTUAL DATA HEADERS IN TRAININGDATA SHEET
 print("cleaning values...")
-mydf.wklyhrs = mydf.wklyhrs.round(1)
-mydf.wklyTSStot = mydf.wklyTSStot.round(1)
-mydf.TSSperhr = mydf.TSSperhr.round(1)
+mydf.wklyhrs = mydf.wklyhrs.round(1) #TODO
+mydf.wklyTSStot = mydf.wklyTSStot.round(1)  #TODO
+mydf.TSSperhr = mydf.TSSperhr.round(1)  #TODO
 
 # get rid of empty entries n stuff earlier (farther back in time than log entries)
 print("emptying the trash...")
