@@ -25,21 +25,23 @@ print("loading dataframe...")
 mydf = pd.read_excel(sourceexcelfile, sheet_name=sourceexcelsheet)
 
 # round the values (NOT the dates)
-# TODO CHANGE THIS TO MATCH ACTUAL DATA HEADERS IN TRAININGDATA SHEET
 print("cleaning values...")
-mydf.wklyhrs = mydf.wklyhrs.round(1) #TODO
-mydf.wklyTSStot = mydf.wklyTSStot.round(1)  #TODO
-mydf.TSSperhr = mydf.TSSperhr.round(1)  #TODO
+mydf.atl = mydf.atl.round(1)
+mydf.ctl = mydf.ctl.round(1)
+mydf.tsb = mydf.tsb.round(1)
+mydf.totalhours = mydf.totalhours.round(1)  # included for possible future modeling/stats
 
+# will leave this empty cleaning for now given the already calcd nature, may change in future
 # get rid of empty entries n stuff earlier (farther back in time than log entries)
 print("emptying the trash...")
 for i, r in mydf.iterrows():
-    if r['wklyhrs'] > 0 or r['wklyTSStot'] > 0 or r['TSSperhr'] > 0:
+    if r['atl'] != 0 or r['ctl'] != 0 or r['tsb'] != 0:
         # print(df2.iloc[i])
         break
-    elif r['wklyhrs'] <= 0 or r['wklyTSStot'] <= 0 or r['TSSperhr'] <= 0:
+    elif r['atl'] == 0 or r['ctl'] == 0 or r['tsb'] == 0:
         mydf.drop(index=i, inplace=True)
 
+# TODO: decide if want to drop all future (NO forecasting?) or if want to leave all/some in-2wks? for interactive scrolling/zoom fns?
 # get rid of all weekly entries yet to come
 for i, r in mydf.iterrows():
     vals = str(r['datewkstart'])[0:10].split('-')
