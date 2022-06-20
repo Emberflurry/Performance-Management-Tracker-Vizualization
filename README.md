@@ -14,4 +14,8 @@ PMTtest1.py output (as of 6/20/22) should be the following:
 (needs additions of dynamic callouts, dropdowns, zoom sliders, change of plot graphics/aesthetics, but at least it loads everything)
 
 # Note: ALL this req own xl db w sheet w columns as follows:
+for Weekly TLviz:
+![image](https://user-images.githubusercontent.com/87039043/174553877-96bfed2c-2803-425e-8a95-c8b7515f8f69.png)      
+                  
+for Daily PMTviz:
 ![image](https://user-images.githubusercontent.com/87039043/174553644-8ca2c210-23fd-48d1-819d-aaee6c7997fb.png)
