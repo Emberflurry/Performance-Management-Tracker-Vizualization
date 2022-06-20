@@ -29,6 +29,7 @@ print("cleaning values...")
 mydf.atl = mydf.atl.round(1)
 mydf.ctl = mydf.ctl.round(1)
 mydf.tsb = mydf.tsb.round(1)
+mydf.totalTSS=mydf.totalTSS.round(1)
 mydf.totalhours = mydf.totalhours.round(1)  # included for possible future modeling/stats
 
 # will leave this empty cleaning for now given the already calcd nature, may change in future
@@ -38,19 +39,20 @@ for i, r in mydf.iterrows():
     if r['atl'] != 0 or r['ctl'] != 0 or r['tsb'] != 0:
         # print(df2.iloc[i])
         break
-    elif r['atl'] == 0 or r['ctl'] == 0 or r['tsb'] == 0:
+    elif r['atl'] == 0 and r['ctl'] == 0 and r['tsb'] == 0:
         mydf.drop(index=i, inplace=True)
 
 # TODO: decide if want to drop all future (NO forecasting?) or if want to leave all/some in-2wks? for interactive scrolling/zoom fns?
+    #TODO decision(6/20/22): start with forecast a month out ahead, may extend if necessary
 # get rid of all weekly entries yet to come
 for i, r in mydf.iterrows():
-    vals = str(r['datewkstart'])[0:10].split('-')
+    vals = str(r['date'])[0:10].split('-')
     day = int(vals[2])
     month = int(vals[1])
     year = int(vals[0])
 # print(year, month, day)
 
-    if datetime(year, month, day) > datetime(tyear, tmonth, tday):
+    if datetime(year, month, day) > datetime(tyear, tmonth +1, tday):  #ADDED, DEFAULT FORECAST 1MONTH AHEAD
         mydf.drop(index=i, inplace=True)
 
 # print(df2.head())
@@ -59,7 +61,8 @@ for i, r in mydf.iterrows():
 
 # convert and display
 print("melting dataframe...")
-mydf = pd.melt(mydf, id_vars=['datewkstart', 'wklyhrs', 'wklyTSStot'], value_vars=mydf.columns[3:], var_name='category', value_name='TSSperHOUR')
+# TODO 6/20/22 - CHECK IF MELT IS CORRECT- esp value_vars and id_vars and value_name (should b but still)
+mydf = pd.melt(mydf, id_vars=['date', 'atl', 'ctl', 'tsb', 'totalTSS'], value_vars=mydf.columns[4:], var_name='category', value_name='totalhours')
 # print(df2.head())
 
 # ^ READING AND CLEANING INTO PD DF
@@ -75,43 +78,53 @@ print("creating line figure...")
 #fig2.update_yaxes(range=(0, 75), constrain='domain')
 
 #now add ea of the traces, color goes blue, red, green
+#old weekly plot stuff from multitest:
+# fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["wklyhrs"], name="totalhours"), secondary_y=False)
+# fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["TSSperHOUR"], name="TSS/hour", fillcolor='#ff0000'), secondary_y=False)
+# fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["wklyTSStot"], name="totalTSS"), secondary_y=True)
+# fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["wklyTSStot"], name="totalTSS"), secondary_y=True)
 
-fig2.add_trace(grphobj.Scatter(x=mydf["datewkstart"], y=mydf["wklyhrs"], name="totalhours"), secondary_y=False)
-fig2.add_trace(grphobj.Scatter(x=mydf["datewkstart"], y=mydf["TSSperHOUR"], name="TSS/hour", fillcolor='#ff0000'), secondary_y=False)
-fig2.add_trace(grphobj.Scatter(x=mydf["datewkstart"], y=mydf["wklyTSStot"], name="totalTSS"), secondary_y=True)
+#color order: brg, ATL, CTL, TSS on primary, TSB on secondary ::
+fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["atl"], name="ATL"), secondary_y=False)
+fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["ctl"], name="CTL", fillcolor='#ff0000'), secondary_y=False)
+fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["totalTSS"], name="totalTSS"), secondary_y=False)
+# fig2.add_bar(x=mydf[])  #TODO(6/20/22) attempting to add totalTSS as a bar chart instead of trace (skinny)
+fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["tsb"], name="tsb"), secondary_y=True)
 
+# TODO(6/20/22) CHANGE TO MAKE totalTSS a
 fig2.update_traces(marker_line=dict(color='#ff0000'), mode="lines+markers", selector=dict(type='scatter'))
 # add titles:
-fig2.update_layout(title_text="wklystats")
-fig2.update_xaxes(title_text="date (of start of week")
+fig2.update_layout(title_text="daily PMT")
+fig2.update_xaxes(title_text="date")
 
 
 # add multiple y axes titles
-fig2.update_yaxes(title_text="<b>TSS/hour and TotalHours", secondary_y=False, range=(0,75), constrain='domain')
-fig2.update_yaxes(title_text="<b>total TSS", secondary_y=True)
+fig2.update_yaxes(title_text="<b>ATL/CTL/totalTSS", secondary_y=False, range=(0,275), constrain='domain')
+fig2.update_yaxes(title_text="<b>TSB", secondary_y=True, range=(-80,40))
 
-print("minting data callout labels...")
-# print(fig2)
-print(fig2['data'][1]['name'])
-# order of series: totalhours, TSS/hour, totalTSS
-
-for ser in fig2['data']:
-    print(ser['name'])
-    ser['text'] = mydf['wklyhrs']
-    # fig2.select_annotations()
-    # fig2.get_subplot()
-    # fig2['data']._get_subplot_rows_columns()[1]
-    # fig2.select_yaxes()
-    # print(ser['y'])
-# print(fig2)
-
-    if ser['name'] == "totalTSS":
-        ser['hovertemplate'] = 'totTSS: %{y} <br> hours trained: %{text} <br> date(start of week): %{x}<extra></extra>'
-    elif ser['name'] == "TSS/hour":
-        ser['hovertemplate'] = 'TSS/hour: %{y} <br> hours trained: %{text} <br> date(start of week): %{x}<extra></extra>'
-    elif ser['name'] == "totalhours":
-        ser['hovertemplate'] = 'totalhours: %{y} <br> TSS/hr: %<br> date(start of week): %{x}<extra></extra>'
+# TODO (6/20/22): THINK AB WHAT KIND OF CALLOUT LABELING: (do one un-comment for functionality v)
+# print("minting data callout labels...")
+# # print(fig2)
+# print(fig2['data'][1]['name'])
+# # order of series: totalhours, TSS/hour, totalTSS
 #
+# for ser in fig2['data']:
+#     print(ser['name'])
+#     ser['text'] = mydf['wklyhrs']
+#     # fig2.select_annotations()
+#     # fig2.get_subplot()
+#     # fig2['data']._get_subplot_rows_columns()[1]
+#     # fig2.select_yaxes()
+#     # print(ser['y'])
+# # print(fig2)
+#
+#     if ser['name'] == "totalTSS":
+#         ser['hovertemplate'] = 'totTSS: %{y} <br> hours trained: %{text} <br> date(start of week): %{x}<extra></extra>'
+#     elif ser['name'] == "TSS/hour":
+#         ser['hovertemplate'] = 'TSS/hour: %{y} <br> hours trained: %{text} <br> date(start of week): %{x}<extra></extra>'
+#     elif ser['name'] == "totalhours":
+#         ser['hovertemplate'] = 'totalhours: %{y} <br> TSS/hr: %<br> date(start of week): %{x}<extra></extra>'
+
 # print("writing to display page...")
-pio.write_html(fig2, file='wklyfullmultiy.html', auto_open=True)
+pio.write_html(fig2, file='dailyPMTtest1.html', auto_open=True)
 # print("done! (plz work oh god)")
