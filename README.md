@@ -2,14 +2,22 @@
 # Cardiovascular Endurance training Performance Management Tracker (PMT) Visualization 
  a replacement package/python web-output script(s) for my static + clunky excel models 
 
-run multitest1.py for viz of hours, TSS, TSS/hour, all at the weekly level (req own xl db w sheet w columns as follows):
-
-![image](https://user-images.githubusercontent.com/87039043/174425989-72549dbe-89f9-422e-bc2e-ffca4934d59a.png)
-
-output should be something like this (work still in progress on dynamic labeling, selection menus, and aesthetics):
+# for Weekly Training Load Viz (hours, TSS, TSS/hour):
+multitest1.py output should be something like this (work still in progress on dynamic labeling, selection menus, and aesthetics):
 ![image](https://user-images.githubusercontent.com/87039043/174426082-ecdd2e51-424e-4310-8bab-f60a645ff794.png)
 
+above is version 2.3 (outputfile is locally wklyfullmultiy.html)
 
-above is version 2.3 (file under pmtvis1)
+# for Daily Performance Management Tracker Viz (Chronic Training Load(CTL), Acute Training Load(ATL), TSS, Training Stress Balance(TSB))
+PMTtest1.py output (as of 6/20/22) should be the following:
+![image](https://user-images.githubusercontent.com/87039043/174552406-210ee87f-e23d-4f6b-bf9c-31bb026bb3e7.png)
+(needs additions of dynamic callouts, dropdowns, zoom sliders, change of plot graphics/aesthetics, but at least it loads everything)
 
-viz (@daily scale) of Chronic and Acute Training Load (CTL and ATL), and Training Stress Balance (TSB) for more formulaic PMT analysis is in the works... see PMTtest1.py for current progress
+above is version 1.4 (outputfile is locally dailyPMTtest1.html)
+
+# Note: ALL this req own xl db w sheet w columns as follows:
+for Weekly TLviz:
+![image](https://user-images.githubusercontent.com/87039043/174553877-96bfed2c-2803-425e-8a95-c8b7515f8f69.png)      
+                  
+for Daily PMTviz:
+![image](https://user-images.githubusercontent.com/87039043/174553644-8ca2c210-23fd-48d1-819d-aaee6c7997fb.png)
