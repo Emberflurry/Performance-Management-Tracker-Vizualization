@@ -42,8 +42,8 @@ for i, r in mydf.iterrows():
     elif r['atl'] == 0 and r['ctl'] == 0 and r['tsb'] == 0:
         mydf.drop(index=i, inplace=True)
 
-# TODO: decide if want to drop all future (NO forecasting?) or if want to leave all/some in-2wks? for interactive scrolling/zoom fns?
-    #TODO decision(6/20/22): start with forecast a month out ahead, may extend if necessary
+# decide if want to drop all future (NO forecasting?) or if want to leave all/some in-2wks? for interactive scrolling/zoom fns?
+    #TODO decisionMade^(6/20/22): start with forecast a month out ahead, may extend if necessary
 # get rid of all weekly entries yet to come
 for i, r in mydf.iterrows():
     vals = str(r['date'])[0:10].split('-')
@@ -70,7 +70,6 @@ mydf = pd.melt(mydf, id_vars=['date', 'atl', 'ctl', 'tsb', 'totalTSS'], value_va
 # v CREATION OF FIGURES N PLOTS
 
 fig2 = make_subplots(specs=[[{"secondary_y": True}]])
-
 print("creating line figure...")
 
 #NEED TO CHANGE CANT USE PX FOR SECOND Y AXIS
@@ -85,23 +84,23 @@ print("creating line figure...")
 # fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["wklyTSStot"], name="totalTSS"), secondary_y=True)
 
 #color order: brg, ATL, CTL, TSS on primary, TSB on secondary ::
-fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["atl"], name="ATL", mode='lines+markers'), secondary_y=False)
-fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["ctl"], name="CTL", mode='lines+markers', fillcolor='#ff0000'), secondary_y=False)
-fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["totalTSS"], name="totalTSS", mode='markers'), secondary_y=False)
-# fig2.add_bar(x=mydf[])  #TODO(6/20/22) attempting to add totalTSS as a bar chart instead of trace (skinny)
-fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["tsb"], name="tsb", mode='lines'), secondary_y=True)
+fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["atl"], name="ATL", mode='lines', marker=dict(color='mediumslateblue'), opacity=.7), secondary_y=False)
+fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["ctl"], name="CTL", mode='lines+markers', marker=dict(color='firebrick'), fillcolor='#ff0000', opacity=.75), secondary_y=False) # no clue what fillcolor does
+fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["totalTSS"], name="totalTSS", mode='markers', marker=dict(color='mediumspringgreen', opacity=.53)), secondary_y=False)
+fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["tsb"], name="tsb", mode='lines', marker=dict(color='fuchsia'), opacity=.35), secondary_y=True)
 
 # TODO(6/20/22) CHANGE TO MAKE totalTSS a bar? dot?
 # fig2.update_traces(marker_line=dict(color='#ff0000'), mode="lines+markers", selector=dict(type='scatter'))  # modifies mode, removing temp to test (now unnec, will delete later when sure)
-fig2.update_traces(marker_line=dict(color='#ff0000'), selector=dict(type='scatter'))  # ITWORKS - without mode declaration (already done manually above in adding traces)^^^
+#fig2.update_traces(marker_line=dict(color='fuchsia'), selector=dict(type='scatter'))  # ITWORKS - without mode declaration (already done manually above in adding traces)^^^
+#fig2.update_traces(selector=dict(type='scatter'))
 # add titles:
 fig2.update_layout(title_text="daily PMT")
 fig2.update_xaxes(title_text="date")
 
-
 # add multiple y axes titles
-fig2.update_yaxes(title_text="<b>ATL/CTL/totalTSS", secondary_y=False, range=(0, 375), constrain='domain')
-fig2.update_yaxes(title_text="<b>TSB", secondary_y=True, range=(-80, 40))
+# TODO (6/21/22) CHANGE COLOR OF YAXES LABEL FOR TSB TO MATCH GRIDLINES COLOR OF fuchsia
+fig2.update_yaxes(title_text="<b>ATL/CTL/totalTSS", secondary_y=False, range=(0, 375), constrain='domain', gridcolor='black', gridwidth=.35)
+fig2.update_yaxes(title_text="<b>TSB", secondary_y=True, range=(-75, 35),  gridcolor='fuchsia', gridwidth=.2)
 
 # TODO (6/20/22): THINK AB WHAT KIND OF CALLOUT LABELING: (do one un-comment for functionality v)
 # print("minting data callout labels...")
