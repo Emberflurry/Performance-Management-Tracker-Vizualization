@@ -100,7 +100,7 @@ fig2.update_xaxes(title_text="date")
 
 
 # add multiple y axes titles
-fig2.update_yaxes(title_text="<b>ATL/CTL/totalTSS", secondary_y=False, range=(0, 275), constrain='domain')
+fig2.update_yaxes(title_text="<b>ATL/CTL/totalTSS", secondary_y=False, range=(0, 375), constrain='domain')
 fig2.update_yaxes(title_text="<b>TSB", secondary_y=True, range=(-80, 40))
 
 # TODO (6/20/22): THINK AB WHAT KIND OF CALLOUT LABELING: (do one un-comment for functionality v)
