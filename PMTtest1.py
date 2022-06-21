@@ -85,22 +85,23 @@ print("creating line figure...")
 # fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["wklyTSStot"], name="totalTSS"), secondary_y=True)
 
 #color order: brg, ATL, CTL, TSS on primary, TSB on secondary ::
-fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["atl"], name="ATL"), secondary_y=False)
-fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["ctl"], name="CTL", fillcolor='#ff0000'), secondary_y=False)
-fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["totalTSS"], name="totalTSS"), secondary_y=False)
+fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["atl"], name="ATL", mode='lines+markers'), secondary_y=False)
+fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["ctl"], name="CTL", mode='lines+markers', fillcolor='#ff0000'), secondary_y=False)
+fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["totalTSS"], name="totalTSS", mode='markers'), secondary_y=False)
 # fig2.add_bar(x=mydf[])  #TODO(6/20/22) attempting to add totalTSS as a bar chart instead of trace (skinny)
-fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["tsb"], name="tsb"), secondary_y=True)
+fig2.add_trace(grphobj.Scatter(x=mydf["date"], y=mydf["tsb"], name="tsb", mode='lines'), secondary_y=True)
 
-# TODO(6/20/22) CHANGE TO MAKE totalTSS a
-fig2.update_traces(marker_line=dict(color='#ff0000'), mode="lines+markers", selector=dict(type='scatter'))
+# TODO(6/20/22) CHANGE TO MAKE totalTSS a bar? dot?
+# fig2.update_traces(marker_line=dict(color='#ff0000'), mode="lines+markers", selector=dict(type='scatter'))  # modifies mode, removing temp to test (now unnec, will delete later when sure)
+fig2.update_traces(marker_line=dict(color='#ff0000'), selector=dict(type='scatter'))  # ITWORKS - without mode declaration (already done manually above in adding traces)^^^
 # add titles:
 fig2.update_layout(title_text="daily PMT")
 fig2.update_xaxes(title_text="date")
 
 
 # add multiple y axes titles
-fig2.update_yaxes(title_text="<b>ATL/CTL/totalTSS", secondary_y=False, range=(0,275), constrain='domain')
-fig2.update_yaxes(title_text="<b>TSB", secondary_y=True, range=(-80,40))
+fig2.update_yaxes(title_text="<b>ATL/CTL/totalTSS", secondary_y=False, range=(0, 275), constrain='domain')
+fig2.update_yaxes(title_text="<b>TSB", secondary_y=True, range=(-80, 40))
 
 # TODO (6/20/22): THINK AB WHAT KIND OF CALLOUT LABELING: (do one un-comment for functionality v)
 # print("minting data callout labels...")
