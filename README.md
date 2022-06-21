@@ -9,11 +9,11 @@ multitest1.py output should be something like this (work still in progress on dy
 above is version 2.3 (outputfile is locally wklyfullmultiy.html)
 
 # for Daily Performance Management Tracker Viz (Chronic Training Load(CTL), Acute Training Load(ATL), TSS, Training Stress Balance(TSB))
-PMTtest1.py output (as of 6/20/22) should be the following:
-![image](https://user-images.githubusercontent.com/87039043/174552406-210ee87f-e23d-4f6b-bf9c-31bb026bb3e7.png)
-(needs additions of dynamic callouts, dropdowns, zoom sliders, change of plot graphics/aesthetics, but at least it loads everything)
+PMTtest1.py output (as of 6/21/22) should be the following:
+![image](https://user-images.githubusercontent.com/87039043/174727689-59e32d26-986f-49f2-8ac8-7b140046cb6e.png)
+(needs additions of dynamic callouts, dropdowns, zoom sliders, change of some plot graphics/alphas/aesthetics, but at least it loads everything)
 
-above is version 1.4 (outputfile is locally dailyPMTtest1.html)
+above is version 1.5 (outputfile is locally dailyPMTtest1.html)
 
 # Note: ALL this req own xl db w sheet w columns as follows:
 for Weekly TLviz:
