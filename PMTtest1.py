@@ -102,7 +102,7 @@ fig2.update_xaxes(title_text="date")
 fig2.update_yaxes(title_text="<b>ATL/CTL/totalTSS", secondary_y=False, range=(0, 375), constrain='domain', gridcolor='black', gridwidth=.35)
 fig2.update_yaxes(title_text="<b>TSB", secondary_y=True, range=(-75, 35),  gridcolor='fuchsia', gridwidth=.2)
 
-# TODO (6/20/22): THINK AB WHAT KIND OF CALLOUT LABELING: (do one un-comment for functionality v)
+# TODO (6/20/22): THINK AB WHAT KIND OF CALLOUT LABELING: (do one un-comment for functionality below v)
 # print("minting data callout labels...")
 # # print(fig2)
 # print(fig2['data'][1]['name'])
