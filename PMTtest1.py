@@ -1,4 +1,4 @@
-# import chart_studio.plotly as py
+import chart_studio.plotly as py
 import plotly.graph_objects as grphobj
 from plotly.subplots import make_subplots
 import plotly.io as pio
@@ -126,5 +126,6 @@ fig2.update_yaxes(title_text="<b>TSB", secondary_y=True, range=(-75, 35),  gridc
 #         ser['hovertemplate'] = 'totalhours: %{y} <br> TSS/hr: %<br> date(start of week): %{x}<extra></extra>'
 
 # print("writing to display page...")
-pio.write_html(fig2, file='dailyPMTtest1.html', auto_open=True)
+py.plot(fig2,filename='dailyPMTtest1',auto_open=True) 
+#pio.write_html(fig2, file='dailyPMTtest1.html', auto_open=True)  # local HTML write, no internet or chart studio used
 # print("done! (plz work oh god)")
