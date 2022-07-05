@@ -41,24 +41,23 @@ print("minting data callout labels...")
 # print(fig2)
 print(fig2['data'][1]['name'])
 # order of series: totalhours, TSS/hour, totalTSS
-
-for ser in fig2['data']:
-    print(ser['name'])
-    ser['text'] = mydf['wklyhrs']
-    # fig2.select_annotations()
-    # fig2.get_subplot()
-    # fig2['data']._get_subplot_rows_columns()[1]
-    # fig2.select_yaxes()
-    # print(ser['y'])
+# for ser in fig2['data']:
+#     print(ser['name'])
+#     ser['text'] = mydf['wklyhrs']
+#     # fig2.select_annotations()
+#     # fig2.get_subplot()
+#     # fig2['data']._get_subplot_rows_columns()[1]
+#     # fig2.select_yaxes()
+#     print(ser['y'])
 # print(fig2)
-
-    if ser['name'] == "totalTSS":
-        ser['hovertemplate'] = 'totTSS: %{y} <br> hours trained: %{text} <br> date(start of week): %{x}<extra></extra>'
-    elif ser['name'] == "TSS/hour":
-        ser['hovertemplate'] = 'TSS/hour: %{y} <br> hours trained: %{text} <br> date(start of week): %{x}<extra></extra>'
-    elif ser['name'] == "totalhours":
-        ser['hovertemplate'] = 'totalhours: %{y} <br> TSS/hr: %<br> date(start of week): %{x}<extra></extra>'
+#
+#     if ser['name'] == "totalTSS":
+#         ser['hovertemplate'] = 'totTSS: %{y} <br> hours trained: %{text} <br> date(start of week): %{x}<extra></extra>'
+#     elif ser['name'] == "TSS/hour":
+#         ser['hovertemplate'] = 'TSS/hour: %{y} <br> hours trained: %{text} <br> date(start of week): %{x}<extra></extra>'
+#     elif ser['name'] == "totalhours":
+#         ser['hovertemplate'] = 'totalhours: %{y} <br> TSS/hr: %<br> date(start of week): %{x}<extra></extra>'
 #
 # print("writing to display page...")
-pio.write_html(fig2, file='wklyfullmultiy.html', auto_open=True)
+# pio.write_html(fig2, file='wklyfullmultiy.html', auto_open=True)
 # print("done! (plz work oh god)")
