@@ -54,7 +54,7 @@ df2 = pd.melt(df2, id_vars=['datewkstart', 'wklyhrs'], value_vars=df2.columns[3:
 
 print("creating line figure...")
 fig2 = px.line(df2, x="datewkstart", y="TSSperHOUR", title='TSS/hour by Week: A Proxy for Weekly Intensity/Volume Ratio', color='category', markers=True)  # if necessary copy the example and then try
-fig2.add_bar(x=df2.datewkstart, y=df2.wklyhrs)
+#fig2.add_bar(x=df2.datewkstart, y=df2.wklyhrs)
 fig2.update_yaxes(range=(0, 75), constrain='domain')
 
 print("minting labels...")
